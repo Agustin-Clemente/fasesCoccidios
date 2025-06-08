@@ -78,15 +78,14 @@ const items = [
                     item.style.height = `${rect.height}px`;
                     item.style.position = 'absolute';
                     item.style.zIndex = 1000;
-                    item.style.left = `${touch.clientX - offsetX}px`;
-                    item.style.top = `${touch.clientY - offsetY}px`;
+                    item.style.left = `${touch.clientX - offsetX + window.scrollX}px`;
+                    item.style.top = `${touch.clientY - offsetY + window.scrollY}px`;
 
                     const moveHandler = (e) => {
-                        e.preventDefault(); // Prevenir el desplazamiento de la página
+                        e.preventDefault();
                         const touch = e.touches[0];
-                        // Actualiza la posición para que el dedo quede centrado sobre el elemento
-                        item.style.left = `${touch.clientX - offsetX}px`;
-                        item.style.top = `${touch.clientY - offsetY}px`;
+                        item.style.left = `${touch.clientX - offsetX + window.scrollX}px`;
+                        item.style.top = `${touch.clientY - offsetY + window.scrollY}px`;
                     };
 
                     const endHandler = (e) => {
