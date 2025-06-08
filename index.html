@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ciclo Biológico Coccidios</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-black">
+    <div class="container">
+        <h1 class="title">Ciclo biológico Coccidios</h1>
+
+        <div class="game-area flex flex-col sm:flex-row gap-4 ">
+            <div id="asexual-drop-zone" class="drop-zone flex-1">
+                <h2 class="drop-zone-title">Fase asexual</h2>
+            </div>
+
+            <div id="drag-items-container" class="drag-items-container flex justify-center items-center">
+            </div>
+
+            <div id="sexual-drop-zone" class="drop-zone flex-1">
+                <h2 class="drop-zone-title">Fase sexual</h2>
+            </div>
+        </div>
+
+        <button id="reset-button" class="reset-button mt-4">Reiniciar Juego</button>
+    </div>
+
+    <div id="message-box" class="message-box"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
