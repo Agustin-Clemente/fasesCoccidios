@@ -65,15 +65,26 @@ const items = [
                 item.addEventListener('touchstart', (e) => {
                     draggedItem = item;
                     initialParent = item.parentNode;
+
+                    // Obtener la posición inicial del elemento y del touch
+                    const touch = e.touches[0];
+                    const rect = item.getBoundingClientRect();
+                    // Calcula el desplazamiento entre el dedo y la esquina superior izquierda del elemento
+                    const offsetX = touch.clientX - rect.left;
+                    const offsetY = touch.clientY - rect.top;
+
+                    // Ajusta el ancho para evitar que cambie al poner position absolute
+                    item.style.width = `${rect.width}px`;
+                    item.style.height = `${rect.height}px`;
                     item.style.position = 'absolute';
                     item.style.zIndex = 1000;
-                    const touch = e.touches[0];
-                    const offsetX = touch.clientX - item.getBoundingClientRect().left;
-                    const offsetY = touch.clientY - item.getBoundingClientRect().top;
+                    item.style.left = `${touch.clientX - offsetX}px`;
+                    item.style.top = `${touch.clientY - offsetY}px`;
 
                     const moveHandler = (e) => {
                         e.preventDefault(); // Prevenir el desplazamiento de la página
                         const touch = e.touches[0];
+                        // Actualiza la posición para que el dedo quede centrado sobre el elemento
                         item.style.left = `${touch.clientX - offsetX}px`;
                         item.style.top = `${touch.clientY - offsetY}px`;
                     };
@@ -83,10 +94,13 @@ const items = [
                         item.removeEventListener('touchend', endHandler);
                         item.removeEventListener('touchcancel', endHandler);
 
-                        item.style.position = ''; // Restablecer posición
-                        item.style.zIndex = ''; // Restablecer z-index
+                        item.style.position = '';
+                        item.style.zIndex = '';
+                        item.style.left = '';
+                        item.style.top = '';
+                        item.style.width = '';
+                        item.style.height = '';
 
-                        // Determinar la zona de suelta basándose en las coordenadas del touch
                         const finalTouch = e.changedTouches[0];
                         const targetElement = document.elementFromPoint(finalTouch.clientX, finalTouch.clientY);
 
@@ -100,11 +114,10 @@ const items = [
                         if (droppedIntoZone) {
                             handleDrop(droppedIntoZone, item);
                         } else {
-                            // Si se soltó fuera de una zona, devolver al contenedor original o a su posición inicial
                             if (initialParent) {
                                 initialParent.appendChild(item);
                             } else {
-                                dragItemsContainer.appendChild(item); // O alguna posición predeterminada si no había padre inicial
+                                dragItemsContainer.appendChild(item);
                             }
                         }
                         draggedItem = null;
